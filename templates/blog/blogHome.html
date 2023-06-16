@@ -6,17 +6,58 @@
 
 
 {% if user.is_authenticated %}
+<div style=" margin:auto ; width: 40%;">
+<hr>
+<h1>Create Post</h1>
+{% endif %}
 
-{% for post in posts %}
+<a method="POST" style=" margin:auto; width:60%;" href="{% url 'postme' %}" class="top-menu">
+    {% include './icons/file-earmark-plus.svg' %}
+</a>
+</div>
+
+<hr>
+{% comment %} {% with b = user.is_authenticated %}
+{% if {{ b }}==false %}
+<h1>False Login</h1>
+{% endif %}
+
+{% endwith %} {% endcomment %}
+
+
+{% comment %} {% if request.user == posts.1.user %}
+<h1>True Login</h1>
+{% endif %} {% endcomment %}
+
+
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="jumbotron my-3">
+      <h1 class="display-4">User Profile</h1>
+      <p class="lead">Email : {{user.get_username}}</p>
+      <hr class="my-4">
+      <p>Name : {{user.get_full_name}}</p>
+      {% comment %} <hr class="my-4"> {% endcomment %}
+      <p>Phone : {{user.email}}</p>
+
+      <a class="btn btn-primary btn-lg" href="/posts" role="button">Go to Posts</a>
+      </div>    
+    </div>
+{% endif %}
+
+    {% if request.user.is_superuser %}
+        {% for post in posts %}
 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
     <div class="col p-4 d-flex flex-column position-static">
-        <strong class="d-inline-block mb-2 text-primary">World</strong>
         <h3 class="mb-0">{{post.title}}</h3>
         <div class="mb-1 text-muted">{{post.timestamp}}</div>
         <p class="card-text mb-auto">{{post.description}}</p>
         <div class="my-2">
             <a href="/blog/blogpost" role="button" class="btn btn-primary">Continue reading</a>
         </div>
+         <a method="POST" style=" margin:auto; width:60%;" href="{% url 'delete_Post' sno=post.sno %}" class="top-menu">
+            Delete my post please
+       </a> 
         
     </div>
     <div class="col-auto d-none d-lg-block">
@@ -26,6 +67,38 @@
         </svg>
     </div>
 </div>
-{% endif %}
-{% endfor %}
-{%endblock body%}
+        {% endfor %}
+    {%elif request.user.is_authenticated %}
+        {% for post in posts %}
+            {% if request.user == post.user %}
+                {% if not post.is_deleted %}
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h3 class="mb-0">{{post.title}}</h3>
+            <div class="mb-1 text-muted">{{post.timestamp}}</div>
+            <p class="card-text mb-auto">{{post.description}}</p>
+             <a method="POST" style=" margin:auto; width:60%;" href="{% url 'delete_Post' sno=post.sno %}" class="top-menu">
+                Delete my post please
+           </a> 
+            
+        </div>
+        <div class="col-auto d-none d-lg-block">
+            <svg class="bd-placeholder-img" width="200" height="250" xmlns={{post.image}} preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+        </div>
+    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <br>
+    <br>   
+    
+    <div class="mb-1 text-muted">{{post.user}}</div>
+    <h1 style="text-align: center;">Log Into Your Account to Create and See Posts </h1>
+    
+    {% endif %}
+
+{%endblock body%}   

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog Home{% endblock title%}
+
+{%block body%}
+
+
+<div style=" margin:auto; width:40%; padding:10%;"> 
+<h2 >New post</h2>
+<hr>
+{% comment %} <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-secondary">Save</button>
+</form> {% endcomment %}
+
+<form method='post'>
+    <input type="text" name="title" placeholder="Title" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc; font-size:16px; font-family: 'Roboto', sans-serif;">  <br>
+    <input type="text" name="Description" placeholder="Description" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc; font-size:16px; font-family: 'Roboto', sans-serif;">  <br>
+    {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+{% comment %} <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_p }}
+    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit Post</a>
+</form> {% endcomment %}
+
+
+
+{%endblock body%}
