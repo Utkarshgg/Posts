@@ -5,14 +5,22 @@
 {%block body%}
 
 
+<div style=" display: inline;">
 {% if user.is_authenticated %}
-<div style=" margin:auto ; width: 40%;">
+<div style=" margin:auto ; width: 20%;">
 <hr>
-<h1>Create Post</h1>
+<h1 style=" display: inline;">Create Post</h1>
 {% endif %}
 
-<a method="POST" style=" margin:auto; width:60%;" href="{% url 'postme' %}" class="top-menu">
+
+{% if user.is_authenticated %}
+<a method="POST" style=" margin: 30%; width:60%; display: inline;" href="{% url 'postme' %}" class="top-menu">
     {% include './icons/file-earmark-plus.svg' %}
+
+{% endif %}
+
+</div>
+
 </a>
 </div>
 

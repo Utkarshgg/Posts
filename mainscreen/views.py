@@ -84,7 +84,7 @@ def delete_Post(request, sno ):
     post = get_object_or_404( Post, sno = sno)
     post.is_deleted = True
     post.save()
-    return HttpResponse("Post has been deleted")
+    return render(request, 'blog/blogHome.html')
 
 
 def postme(request):
@@ -110,7 +110,7 @@ def postme(request):
     return render(request,'blog/post_edit.html')
   else:
       return HttpResponse("Please Login to Continue")
-
+ 
 
 
 
