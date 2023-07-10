@@ -13,7 +13,7 @@ class Contact(models.Model):
     def __str__(self):
         return self.name + " - " + self.email
     
-# class User(AbstractUser):
+# class User(AbstractUser): 
 #     username = models.EmailField(unique=True)
     #phone_number = models.CharField(max_length=10, unique=True)
 
